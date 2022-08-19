@@ -2,6 +2,7 @@ import 'dotenv/config';
 import Joi = require('joi');
 import * as jwt from 'jsonwebtoken';
 import User from '../database/models/User.model';
+import throwEmailOrPasswordIncorrect from './utils';
 
 interface Login {
   email: string,
@@ -10,9 +11,8 @@ interface Login {
 
 class LoginServise {
   static async login(email: string) {
-    const result = await User.findOne(
-      { where: { email }, raw: true },
-    );
+    const result = await User.findOne({ where: { email }, raw: true });
+    if (!result) throwEmailOrPasswordIncorrect('Incorrect email or password');
     return result;
   }
 
