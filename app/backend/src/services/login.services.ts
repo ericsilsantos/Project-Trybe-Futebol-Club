@@ -10,6 +10,12 @@ interface Login {
   password?: string,
 }
 
+interface Token {
+  data: {
+    email: string,
+  }
+}
+
 class LoginServise {
   static async login(email: string): Promise<User> {
     const result = await User.findOne({ where: { email }, raw: true });
@@ -30,6 +36,12 @@ class LoginServise {
     const secret: string = process.env.JWT_SECRET || 'jwt_secret';
     const token = jwt.sign({ data: user }, secret);
     return token;
+  }
+
+  static async verifyToken(token: string) {
+    const secret: string = process.env.JWT_SECRET || 'jwt_secret';
+    const data = jwt.verify(token, secret);
+    return data as Token;
   }
 
   static async verifyPassword(password: string, passwordHash: string) {

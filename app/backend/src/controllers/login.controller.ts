@@ -9,6 +9,13 @@ class LoginControler {
     const token = await LoginServise.getToken(user);
     res.status(200).json({ token });
   }
+
+  static async loginValidate(req: Request, res: Response) {
+    const token = req.headers.authorization || 'tokenfake';
+    const { data: { email } } = await LoginServise.verifyToken(token);
+    const { role } = await LoginServise.login(email);
+    res.status(200).json({ role });
+  }
 }
 
 export default LoginControler;
