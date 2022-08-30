@@ -15,10 +15,10 @@ Teams.init({
   },
   teamName: {
     type: STRING,
-    field: 'team_name',
+    // field: 'team_name',
   },
 }, {
-  // underscored: true,
+  underscored: true,
   sequelize: db,
   modelName: 'Team',
   timestamps: false,

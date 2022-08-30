@@ -2,6 +2,7 @@ import * as express from 'express';
 import 'express-async-errors';
 import errorMiddleware from './middlewares/error.middleware';
 import login from './router/login.router';
+import teamRouter from './router/team.router';
 
 class App {
   public app: express.Express;
@@ -26,6 +27,7 @@ class App {
     this.app.use(express.json());
     this.app.use(accessControl);
     this.app.use('/login', login);
+    this.app.use('/teams', teamRouter);
     this.app.use(errorMiddleware);
   }
 
