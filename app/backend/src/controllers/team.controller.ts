@@ -11,10 +11,15 @@ class TeamController {
   //   this.teamService = new TeamService();
   // }
 
-  static async getAll(_req: Request, res: Response):Promise<void> {
-    console.warn('wwwwww');
+  static async getAll(_req: Request, res: Response) {
     const teams = await TeamService.getAll();
     res.status(200).json(teams);
+  }
+
+  static async getById(req: Request, res: Response) {
+    const id = Number(req.params.id);
+    const team = await TeamService.getById(id);
+    res.status(200).json(team);
   }
 }
 
