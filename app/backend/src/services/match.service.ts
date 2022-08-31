@@ -13,6 +13,11 @@ class MatchService {
     });
     return result;
   }
+
+  static async create(match: Matche) {
+    const result = await Matche.create(match);
+    return result;
+  }
 }
 
 export default MatchService;
