@@ -22,7 +22,7 @@ Matche.init({
     type: INTEGER,
     // field: 'home_team',
     references: {
-      model: 'teams',
+      model: 'Team',
       key: 'id',
     },
   },
@@ -34,7 +34,7 @@ Matche.init({
     type: INTEGER,
     // field: 'away_team',
     references: {
-      model: 'teams',
+      model: 'Team',
       key: 'id',
     },
   },
@@ -53,10 +53,10 @@ Matche.init({
   timestamps: false,
 });
 
-Team.belongsTo(Matche, { foreignKey: 'id', as: 'homeTeam' });
-Team.belongsTo(Matche, { foreignKey: 'id', as: 'awayTeam' });
+Team.hasMany(Matche, { foreignKey: 'homeTeam', as: 'teamHome' });
+Team.hasMany(Matche, { foreignKey: 'awayTeam', as: 'teamAway' });
 
-Matche.hasMany(Team, { foreignKey: 'id', as: 'homeTeam' });
-Matche.hasMany(Team, { foreignKey: 'id', as: 'awayTeam' });
+Matche.belongsTo(Team, { foreignKey: 'homeTeam', as: 'teamHome' });
+Matche.belongsTo(Team, { foreignKey: 'awayTeam', as: 'teamAway' });
 
 export default Matche;
