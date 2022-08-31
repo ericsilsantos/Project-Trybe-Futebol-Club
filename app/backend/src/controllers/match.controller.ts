@@ -12,6 +12,12 @@ class MatchController {
     const matchCreated = await MatchService.create(match);
     res.status(201).json(matchCreated);
   }
+
+  static async finish(req: Request, res: Response) {
+    const idMatch = req.params.id;
+    await MatchService.finish(idMatch);
+    res.status(200).json({ message: 'Finished' });
+  }
 }
 
 export default MatchController;

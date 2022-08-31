@@ -5,7 +5,6 @@ class MatchService {
   static async getAll() {
     console.warn('aaaaaaaaaa');
     const result = await Matche.findAll({
-      // include: { model: Team, as: 'teamHome' },
       include: [
         { model: Team, as: 'teamHome' },
         { model: Team, as: 'teamAway' },
@@ -16,6 +15,14 @@ class MatchService {
 
   static async create(match: Matche) {
     const result = await Matche.create(match);
+    return result;
+  }
+
+  static async finish(idMatch: string) {
+    const result = await Matche.update(
+      { inProgress: false },
+      { where: { id: idMatch } },
+    );
     return result;
   }
 }
