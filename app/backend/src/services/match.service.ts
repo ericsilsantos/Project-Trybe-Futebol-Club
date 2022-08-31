@@ -1,5 +1,6 @@
 import Team from '../database/models/Team.model';
 import Matche from '../database/models/Matche.model';
+import { throwTeamNotExist } from '../controllers/utils';
 
 class MatchService {
   static async getAll() {
@@ -24,6 +25,14 @@ class MatchService {
       { where: { id: idMatch } },
     );
     return result;
+  }
+
+  static async verifyExist(teamHome: number, teamAway: number) {
+    const result1 = await Matche.findOne({ where: { id: teamHome } });
+    const result2 = await Matche.findOne({ where: { id: teamAway } });
+    if (result1 === null || result2 === null) {
+      throwTeamNotExist('There is no team with such id!');
+    }
   }
 }
 
