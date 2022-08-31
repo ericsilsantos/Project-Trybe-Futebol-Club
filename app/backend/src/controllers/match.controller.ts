@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
+import Matche from '../database/models/Matche.model';
 import MatchService from '../services/match.service';
+import throwTwoEqualTeams from './utils';
 
 class MatchController {
   static async getAll(_req: Request, res: Response) {
@@ -8,7 +10,10 @@ class MatchController {
   }
 
   static async create(req: Request, res: Response) {
-    const match = req.body;
+    const match: Matche = req.body;
+    if (match.homeTeam === match.awayTeam) {
+      throwTwoEqualTeams('It is not possible to create a match with two equal teams');
+    }
     const matchCreated = await MatchService.create(match);
     res.status(201).json(matchCreated);
   }
