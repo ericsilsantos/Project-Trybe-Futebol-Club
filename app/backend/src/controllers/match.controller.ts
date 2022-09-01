@@ -24,6 +24,12 @@ class MatchController {
     await MatchService.finish(idMatch);
     res.status(200).json({ message: 'Finished' });
   }
+
+  static async atualizar(req: Request, res: Response) {
+    const idMatch = req.params.id;
+    await MatchService.atualizarPlacar(idMatch, req.body);
+    res.status(200).json({ message: 'Updated' });
+  }
 }
 
 export default MatchController;

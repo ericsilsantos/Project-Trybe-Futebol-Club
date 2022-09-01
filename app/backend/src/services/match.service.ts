@@ -2,6 +2,11 @@ import Team from '../database/models/Team.model';
 import Matche from '../database/models/Matche.model';
 import { throwTeamNotExist } from '../controllers/utils';
 
+interface IPlacar {
+  homeTeamGoals: number,
+  awayTeamGoals: number,
+}
+
 class MatchService {
   static async getAll() {
     console.warn('aaaaaaaaaa');
@@ -33,6 +38,13 @@ class MatchService {
     if (result1 === null || result2 === null) {
       throwTeamNotExist('There is no team with such id!');
     }
+  }
+
+  static async atualizarPlacar(idMatch: string, placar: IPlacar) {
+    await Matche.update({
+      homeTeamGoals: placar.homeTeamGoals,
+      awayTeamGoals: placar.awayTeamGoals,
+    }, { where: { id: idMatch } });
   }
 }
 
